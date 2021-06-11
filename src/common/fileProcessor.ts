@@ -33,6 +33,27 @@ import { assertExtension, millisToFrames } from "./utils";
 
 const SLP_FILE_EXT = ".slp";
 
+
+
+//Start % used   =   Flcn,  DK , Fox , G&W , Krby, Bwsr, Link, Luig, Mrio, Mrth, Mew2, Ness, Pech, Pika, Ices, Puff, Smus, Yshi, Zlda, Shik, Flco, Ylnk, DMro, Roy , Pchu, Gnon, 
+const comboAvg = [12.5, 10.5, 8.5, 11.5, 11.5, 8, 9, 10, 12, 11, 8.5, 7, 10.5, 7, 8.5, 14.5, 11.5, 12, 8.5, 8, 10.5, 8.5, 7.5, 10.5, 7, 12.5];
+const tierBoost = [0, -0.75, 0.5, -1, -1.5, -1.5, -0.75, -0.5, -0.5, 0.5, -0.75, -1, 0, -0.25, -0.25, 0.5, -0.25, -0.25, -1.5, 0.25, 0.25, -0.75, -0.5, -1, -1, -0.5];
+/*  S Tier       =                ^^                                        ^^                                  ^^
+    A Tier       =                                                                                                                      ^^    ^^
+    B Tier       =    ^^                                                                      ^^
+    C Tier       =                                                                                  ^^    ^^          ^^    ^^
+    D Tier       =                                              ^^    ^^                                                                                  ^^                ^^
+    E Tier       =          ^^                            ^^                      ^^                                                                ^^
+    F Tier       =                      ^^                                              ^^                                                                      ^^    ^^
+    G Tier       =                            ^^    ^^                                                                            ^^
+*/
+
+var minimumHits = 8; //expected hits
+var pointBuffer = 45;
+var comboLeniency = 1.25; //comboAvg - this value, lower means more leniency
+
+
+
 export enum FindComboOption {
   COMBOS = "COMBOS",
   CONVERSIONS = "CONVERSIONS",
@@ -352,6 +373,25 @@ export class FileProcessor {
     return count;
   }
 }
+
+/*function checkCombo(comboSettings, combo, settings, metadata) {
+    let comboId = 0;
+    settings.players.forEach(p => {
+        if (p.playerIndex === combo.playerIndex) {
+            comboId = p.characterId;
+        }
+    })
+
+    let algorithm = (((-1 * (Math.pow((combo.startPercent - 58.5), (3)))) / 5000) + 40) + (combo.moves.length * ((combo.endPercent - combo.startPercent) / ((combo.endFrame - combo.startFrame) / 60)) * 1.35);
+
+    const goodScore = (algorithm >= (((comboAvg[comboId] + tierBoost[comboId] + comboLeniency) * (minimumHits + 1)) + pointBuffer));
+
+    if (!goodScore || !combo.didKill) {
+        return false;
+    }
+
+    return true;
+}*/
 
 // export const fileProcessor = new FileProcessor();
 
